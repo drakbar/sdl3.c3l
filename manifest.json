@@ -1,0 +1,9 @@
+{
+    "provides": "sdl3",
+    "targets": {
+        "linux-x64": {
+            "linkflags": [],
+            "linked-libraries": [ "SDL3", "m" ]
+        }
+    }
+}
