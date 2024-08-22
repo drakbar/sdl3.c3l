@@ -731,7 +731,7 @@ union Event
     DisplayEvent display;
     WindowEvent window;
     KeyboardDeviceEvent kdevice;
-    KeyboardEvent key;
+    KeyboardEvent keyboard;
     TextEditingEvent edit;
     TextEditingCandidatesEvent edit_candidates;
     TextInputEvent text;
