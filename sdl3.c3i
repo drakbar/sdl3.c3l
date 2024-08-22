@@ -2,8 +2,8 @@ module sdl3;
 
 distinct SpinLock = int;
 
-macro @atomic_dec_ref($a) => atomic_add($a, -1) == 1;
-macro @atomic_inc_ref($a) => atomic_add($a, 1);
+macro @atomic_dec_ref(&a) => atomic_add(&a, -1) == 1;
+macro @atomic_inc_ref(&a) => atomic_add(&a, 1);
 
 struct AtomicInt
 {
@@ -30,14 +30,14 @@ const uint AUDIO_MASK_FLOAT       =  (1u<<8);
 const uint AUDIO_MASK_BIG_ENDIAN  =  (1u<<12);
 const uint AUDIO_MASK_SIGNED      =  (1u<<15);
 
-macro @audio_bitsize($x)  => (($x) & AUDIO_MASK_BITSIZE);
-macro @audio_bytesize($x) => (@audio_bitsize($x) / 8);
-macro @audio_is_float($x) => (($x) &  AUDIO_MASK_FLOAT);
-macro @audio_is_bigendian($x) => (($x) & AUDIO_MASK_BIG_ENDIAN);
-macro @audio_is_little_endian($x) => (!@audio_is_big_endian($x));
-macro @audio_is_signed($x) => (($x) & AUDIO_MASK_SIGNED);
-macro @audio_is_int($x) => (!@audio_is_float($x));
-macro @audio_is_unsigned($x) => (!@audio_is_signed($x));
+macro @audio_bitsize(&x)  => ((&x) & AUDIO_MASK_BITSIZE);
+macro @audio_bytesize(&x) => (@audio_bitsize(&x) / 8);
+macro @audio_is_float(&x) => ((&x) &  AUDIO_MASK_FLOAT);
+macro @audio_is_bigendian(&x) => ((&x) & AUDIO_MASK_BIG_ENDIAN);
+macro @audio_is_little_endian(&x) => (!@audio_is_big_endian(&x));
+macro @audio_is_signed(&x) => ((&x) & AUDIO_MASK_SIGNED);
+macro @audio_is_int(&x) => (!@audio_is_float(&x));
+macro @audio_is_unsigned(&x) => (!@audio_is_signed(&x));
 
 distinct AudioDeviceID = uint;
 distinct AudioFormat = uint;
