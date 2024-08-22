@@ -2,15 +2,8 @@ module sdl3;
 
 distinct SpinLock = int;
 
-macro @atomic_dec_ref($a)
-{
-    return (atomic_add($a, -1) == 1);
-}
-
-macro @atomic_inc_ref($a)
-{
-    return atomic_add($a, 1);
-}
+macro @atomic_dec_ref($a) => atomic_add($a, -1) == 1;
+macro @atomic_inc_ref($a) => atomic_add($a, 1);
 
 struct AtomicInt
 {
@@ -37,45 +30,14 @@ const uint AUDIO_MASK_FLOAT       =  (1u<<8);
 const uint AUDIO_MASK_BIG_ENDIAN  =  (1u<<12);
 const uint AUDIO_MASK_SIGNED      =  (1u<<15);
 
-macro @audio_bitsize($x)
-{
-    return (($x) & AUDIO_MASK_BITSIZE);
-}
-
-macro @audio_bytesize($x)
-{
-    return (@audio_bitsize($x) / 8);
-}
-
-macro @audio_is_float($x)
-{
-    return (($x) &  AUDIO_MASK_FLOAT);
-}
-
-macro @audio_is_bigendian($x)
-{
-    return (($x) & AUDIO_MASK_BIG_ENDIAN);
-}
-
-macro @audio_is_little_endian($x)
-{
-    return (!@audio_is_big_endian($x));
-}
-
-macro @audio_is_signed($x)
-{
-    return (($x) & AUDIO_MASK_SIGNED);
-}
-
-macro @audio_is_int($x)
-{
-    return (!@audio_is_float($x));
-}
-
-macro @audio_is_unsigned($x)
-{
-    return (!@audio_is_signed($x));
-}
+macro @audio_bitsize($x)  => (($x) & AUDIO_MASK_BITSIZE);
+macro @audio_bytesize($x) => (@audio_bitsize($x) / 8);
+macro @audio_is_float($x) => (($x) &  AUDIO_MASK_FLOAT);
+macro @audio_is_bigendian($x) => (($x) & AUDIO_MASK_BIG_ENDIAN);
+macro @audio_is_little_endian($x) => (!@audio_is_big_endian($x));
+macro @audio_is_signed($x) => (($x) & AUDIO_MASK_SIGNED);
+macro @audio_is_int($x) => (!@audio_is_float($x));
+macro @audio_is_unsigned($x) => (!@audio_is_signed($x));
 
 distinct AudioDeviceID = uint;
 distinct AudioFormat = uint;
@@ -2541,10 +2503,7 @@ fn void warp_mouse_in_window(Window* window, float x, float y) @extern("SDL_Warp
 
 module sdl3::mouse_button_flags;
 
-macro @mouse_button_mask($x) @local
-{
-    return (MouseButtonFlags)(1u << ((uint)$x-1));
-}
+macro @mouse_button_mask($x) @local => (MouseButtonFlags)(1u << ((uint)$x-1));
 
 const MouseButtonFlags LEFT     =  0x1;
 const MouseButtonFlags MIDDLE   =  0x2;
@@ -3808,20 +3767,9 @@ module sdl3;
 fn ZString get_revision() @extern("SDL_GetRevision");
 fn int get_version() @extern("SDL_GetVersion");
 
-macro int versionnum_major(int version)
-{
-    return ((version) / 1000000);
-}
-
-macro int versionnum_minor(version)
-{
-    return (((version) / 1000) % 1000);
-}
-
-macro int versionnum_micro(int version)
-{
-    return ((version) % 1000);
-}
+macro int versionnum_major(int version) => ((version) / 1000000);
+macro int versionnum_minor(version) => (((version) / 1000) % 1000);
+macro int versionnum_micro(int version) => ((version) % 1000);
 
 module sdl3;
 
