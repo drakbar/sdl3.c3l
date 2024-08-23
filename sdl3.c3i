@@ -685,7 +685,7 @@ struct TextInputEvent
     uint reserved;
     ulong timestamp;
     WindowID windowID;
-    ZString data;
+    char data;
 }
 
 struct TouchFingerEvent
