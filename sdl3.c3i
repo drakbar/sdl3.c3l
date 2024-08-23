@@ -737,7 +737,7 @@ union Event
     TextInputEvent text;
     MouseDeviceEvent mdevice;
     MouseMotionEvent motion;
-    MouseButtonEvent button;
+    MouseButtonEvent mouse;
     MouseWheelEvent wheel;
     JoyDeviceEvent jdevice;
     JoyAxisEvent jaxis;
