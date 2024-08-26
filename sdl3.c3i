@@ -2335,32 +2335,32 @@ fn void set_log_output_function(LogOutputFunction callback, void* userdata) @ext
 
 macro void log_critical(ZString fmt, ..., CInt prio = log_priority::CRITICAL)
 {
-    _log_critical(prio, fmt, $vasplat());
+    _log_critical(prio, fmt, $vasplat);
 }
 
 macro void log_debug(ZString fmt, ..., CInt prio = log_priority::DEBUG)
 {
-    _log_debug(prio, fmt, $vasplat());
+    _log_debug(prio, fmt, $vasplat);
 }
 
 macro void log_error(ZString fmt, ..., CInt prio = log_priority::ERROR)
 {
-    _log_error(prio, fmt, $vasplat());
+    _log_error(prio, fmt, $vasplat);
 }
 
 macro void log_info(ZString fmt, ..., CInt prio = log_priority::INFO)
 {
-    _log_info(prio, fmt, $vasplat());
+    _log_info(prio, fmt, $vasplat);
 }
 
 macro void log_verbose(ZString fmt, ..., CInt prio = log_priority::VERBOSE)
 {
-    _log_verbose(prio, fmt, $vasplat());
+    _log_verbose(prio, fmt, $vasplat);
 }
 
 macro void log_warn(ZString fmt, ..., CInt prio = log_priority::WARN)
 {
-    _log_warn(prio, fmt, $vasplat());
+    _log_warn(prio, fmt, $vasplat);
 }
 
 module sdl3::log_priority;
