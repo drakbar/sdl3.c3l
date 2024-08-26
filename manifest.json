@@ -2,8 +2,10 @@
     "provides": "sdl3",
     "targets": {
         "linux-x64": {
-            "linkflags": [],
             "linked-libraries": [ "SDL3", "m" ]
+        },
+        "windows-x64": {
+            "linked-libraries": [ "SDL3-static", "setupapi", "opengl32", "winmm", "advapi32", "ole32", "gdi32", "oleaut32", "version", "imm32" ]
         }
     }
 }
