@@ -1,6 +1,6 @@
 module sdl3;
 
-distinct SpinLock = int;
+typedef SpinLock = int;
 
 macro @atomic_dec_ref(&a) => atomic_add(&a, -1) == 1;
 macro @atomic_inc_ref(&a) => atomic_add(&a, 1);
@@ -39,12 +39,12 @@ macro @audio_is_signed(&x) => ((&x) & AUDIO_MASK_SIGNED);
 macro @audio_is_int(&x) => (!@audio_is_float(&x));
 macro @audio_is_unsigned(&x) => (!@audio_is_signed(&x));
 
-distinct AudioDeviceID = uint;
-distinct AudioFormat = uint;
-distinct AudioStream = void*;
+typedef AudioDeviceID = uint;
+typedef AudioFormat = uint;
+typedef AudioStream = void*;
 
-def AudioPostmixCallback = fn void(void* userdata, AudioSpec* spec, float* buffer, int buflen);
-def AudioStreamCallback = fn void(void* userdata,  AudioStream* stream, int additional_amount, int total_amount);
+alias AudioPostmixCallback = fn void(void* userdata, AudioSpec* spec, float* buffer, int buflen);
+alias AudioStreamCallback = fn void(void* userdata,  AudioStream* stream, int additional_amount, int total_amount);
 
 struct AudioSpec
 {
@@ -141,9 +141,9 @@ const AudioFormat F32BE  =  0x9120u;
 
 module sdl3;
 
-distinct BlendFactor = uint;
-distinct BlendMode = uint;
-distinct BlendOperation = uint;
+typedef BlendFactor = uint;
+typedef BlendMode = uint;
+typedef BlendOperation = uint;
 
 fn BlendMode compose_custom_blend_mode(BlendFactor src_cf, BlendFactor dst_cf, BlendOperation color_op, BlendFactor src_af, BlendFactor dst_af, BlendOperation alpha_op) @extern("SDL_ComposeCustomBlendMode");
 
@@ -181,9 +181,9 @@ const BlendOperation MAXIMUM       =  0x5;
 
 module sdl3;
 
-distinct Camera = void*;
-distinct CameraID = uint;
-distinct CameraPosition = uint;
+typedef Camera = void*;
+typedef CameraID = uint;
+typedef CameraPosition = uint;
 
 struct CameraSpec
 {
@@ -231,8 +231,8 @@ const CameraPosition BACK_FACING   =  2;
 
 module sdl3;
 
-def ClipboardCleanupCallback = fn void(void* userdata);
-def ClipboardDataCallback = fn void*(void* userdata, ZString mime_type, usz* size);
+alias ClipboardCleanupCallback = fn void(void* userdata);
+alias ClipboardDataCallback = fn void*(void* userdata, ZString mime_type, usz* size);
 
 fn int clear_clipboard_data() @extern("SDL_ClearClipboardData");
 fn void* get_clipboard_data(ZString mime_type, usz* size) @extern("SDL_GetClipboardData");
@@ -270,7 +270,7 @@ fn bool has_sse42() @extern("SDL_HasSSE42");
 
 module sdl3;
 
-def DialogFileCallback = fn void(void* userdata, ZString* filelist, int filter);
+alias DialogFileCallback = fn void(void* userdata, ZString* filelist, int filter);
 
 struct DialogFileFilter
 {
@@ -291,12 +291,12 @@ fn int set_error(ZString fmt, ...) @extern("SDL_SetError");
 
 module sdl3;
 
-distinct EventAction = uint;
-distinct EventType = uint;
+typedef EventAction = uint;
+typedef EventType = uint;
 
-def EventFilter = fn bool(void* userdata, Event* event);
+alias EventFilter = fn bool(void* userdata, Event* event);
 
-distinct Keysym = uint;
+typedef Keysym = uint;
 
 fn int add_event_watch(EventFilter filter, void* userdata) @extern("SDL_AddEventWatch");
 fn void del_event_watch(EventFilter filter, void* userdata) @extern("SDL_DelEventWatch");
@@ -890,11 +890,11 @@ const EventType ENUM_PADDING                  =  0x7fffffff;
 
 module sdl3;
 
-distinct Folder = uint;
-distinct GlobFlags = uint;
-distinct PathType = uint;
+typedef Folder = uint;
+typedef GlobFlags = uint;
+typedef PathType = uint;
 
-def EnumerateDirectoryCallback = fn int(void* userdata, ZString dirname, ZString fname);
+alias EnumerateDirectoryCallback = fn int(void* userdata, ZString dirname, ZString fname);
 
 struct PathInfo
 {
@@ -956,12 +956,12 @@ const PathType OTHER      =  3;
 
 module sdl3;
 
-distinct Gamepad = void*;
-distinct GamepadAxis = int;
-distinct GamepadBindingType = uint;
-distinct GamepadButton = int;
-distinct GamepadButtonLabel = uint;
-distinct GamepadType = uint;
+typedef Gamepad = void*;
+typedef GamepadAxis = int;
+typedef GamepadBindingType = uint;
+typedef GamepadButton = int;
+typedef GamepadButtonLabel = uint;
+typedef GamepadType = uint;
 
 
 struct GamepadBinding
@@ -1176,7 +1176,7 @@ const GamepadType MAX                           =  0xb;
 
 module sdl3;
 
-distinct Guid = void*;
+typedef Guid = void*;
 
 fn void guid_to_string(Guid* guid, ZString pszGUID, int cbGUID) @extern("SDL_GUIDToString");
 fn Guid* string_to_guid(ZString pchGUID) @extern("SDL_StringToGUID");
@@ -1209,8 +1209,8 @@ const uint HAPTIC_SPHERICAL      =  2;
 const uint HAPTIC_STEERING_AXIS  =  3;
 const uint HAPTIC_INFINITY       =  4294967295U;
 
-distinct HapticID = uint;
-distinct Haptic = void*;
+typedef HapticID = uint;
+typedef Haptic = void*;
 
 struct HapticCondition
 {
@@ -1377,8 +1377,8 @@ fn int update_haptic_effect(Haptic* haptic, int effect, HapticEffect* data) @ext
 
 module sdl3;
 
-distinct HIDevice = void*;
-distinct HIDBusType = uint;
+typedef HIDevice = void*;
+typedef HIDBusType = uint;
 
 struct HIDeviceInfo
 {
@@ -1433,11 +1433,11 @@ const HIDBusType SPI        =  0x04;
 
 module sdl3;
 
-distinct Hint = inline char*;
-distinct HintPriority = int;
+typedef Hint = inline char*;
+typedef HintPriority = int;
 
 
-def HintCallback = fn void(void* userdata, ZString name, ZString oldValue, ZString newValue);
+alias HintCallback = fn void(void* userdata, ZString name, ZString oldValue, ZString newValue);
 
 fn int add_hint_callback(ZString name, HintCallback callback, void* userdata) @extern("SDL_AddHintCallback");
 fn void del_hint_callback(ZString name, HintCallback callback, void* userdata) @extern("SDL_DelHintCallback");
@@ -1685,8 +1685,8 @@ const Hint XINPUT_ENABLED                           = "SDL_XINPUT_ENABLED";
 
 module sdl3;
 
-distinct InitFlag = uint;
-distinct MetadataProperty = inline char*;
+typedef InitFlag = uint;
+typedef MetadataProperty = inline char*;
 
 fn ZString get_app_metadata_property(MetadataProperty name) @extern("SDL_GetAppMetadataProperty");
 fn int init(InitFlag) @extern("SDL_Init");
@@ -1721,15 +1721,15 @@ const MetadataProperty TYPE        =  "SDL_PROP_APP_METADATA_TYPE_STRING";
 
 module sdl3;
 
-distinct IOStream = void*;
-distinct IOStatus = uint;
-distinct IOWhence = uint;
+typedef IOStream = void*;
+typedef IOStatus = uint;
+typedef IOWhence = uint;
 
-def StreamCloseCallback = fn int (void* userdata);
-def StreamReadCallback  = fn usz (void* userdata, void* ptr, usz size, IOStatus* status);
-def StreamSeekCallback  = fn long (void* userdata, long offset, IOWhence whence);
-def StreamSizeCallback  = fn long (void* userdata);
-def StreamWriteCallback = fn usz (void* userdata, void* ptr, usz size, IOStatus* status);
+alias StreamCloseCallback = fn int (void* userdata);
+alias StreamReadCallback  = fn usz (void* userdata, void* ptr, usz size, IOStatus* status);
+alias StreamSeekCallback  = fn long (void* userdata, long offset, IOWhence whence);
+alias StreamSizeCallback  = fn long (void* userdata);
+alias StreamWriteCallback = fn usz (void* userdata, void* ptr, usz size, IOStatus* status);
 
 struct IOStreamInterface
 {
@@ -1806,19 +1806,19 @@ module sdl3;
 const int JOYSTICK_AXIS_MAX =  32767;
 const int JOYSTICK_AXIS_MIN = -32768;
 
-distinct Joystick = void*;
-distinct JoystickConnectionState = int;
-distinct JoystickHat = uint;
-distinct JoystickID = uint;
-distinct JoystickType = uint;
+typedef Joystick = void*;
+typedef JoystickConnectionState = int;
+typedef JoystickHat = uint;
+typedef JoystickID = uint;
+typedef JoystickType = uint;
 
-def VirtualJoystickUpdateCallback            = fn void(void* userdata);
-def VirtualJoystickSetPlayerIndexCallback    = fn void(void* userdata, int player_index);
-def VirtualJoystickRumbleCallabck            = fn int (void* userdata, ushort low_frequency_rumble, ushort high_frequency_rumble);
-def VirtualJoystickRumbleTriggersCallabck    = fn int (void* userdata, ushort left_rumble, ushort right_rumble);
-def VirtualJoystickSetLEDCallabck            = fn int (void* userdata, char red, char green, char blue);
-def VirtualJoystickSendEffectCallabck        = fn int (void* userdata, void* data, int size);
-def VirtualJoystickSetSensorsEnabledCallabck = fn int (void* userdata, bool enabled);
+alias VirtualJoystickUpdateCallback            = fn void(void* userdata);
+alias VirtualJoystickSetPlayerIndexCallback    = fn void(void* userdata, int player_index);
+alias VirtualJoystickRumbleCallabck            = fn int (void* userdata, ushort low_frequency_rumble, ushort high_frequency_rumble);
+alias VirtualJoystickRumbleTriggersCallabck    = fn int (void* userdata, ushort left_rumble, ushort right_rumble);
+alias VirtualJoystickSetLEDCallabck            = fn int (void* userdata, char red, char green, char blue);
+alias VirtualJoystickSendEffectCallabck        = fn int (void* userdata, void* data, int size);
+alias VirtualJoystickSetSensorsEnabledCallabck = fn int (void* userdata, bool enabled);
 
 struct VirtualJoystickDesc
 {
@@ -1956,9 +1956,9 @@ const JoystickType THROTTLE      = 9;
 
 module sdl3;
 
-distinct KeyboardID = uint;
-distinct Capitalization = uint;
-distinct TextInputType = uint;
+typedef KeyboardID = uint;
+typedef Capitalization = uint;
+typedef TextInputType = uint;
 
 fn int clear_composition(Window* window) @extern("SDL_ClearComposition");
 fn Window* get_keyboard_focus() @extern("SDL_GetKeyboardFocus");
@@ -2006,8 +2006,8 @@ const TextInputType NUMBER_PASSWORD_VISIBLE  =  8;
 
 module sdl3;
 
-distinct Keycode = uint;
-distinct Keymod = ushort;
+typedef Keycode = uint;
+typedef Keymod = ushort;
 
 const SCANCODE_MASK  =  (1u<<30);
 
@@ -2316,7 +2316,7 @@ macro Locale[] get_preferred_locales()
 
 module sdl3;
 
-def LogOutputFunction = fn void(void* userdata, int category, int priority, ZString message);
+alias LogOutputFunction = fn void(void* userdata, int category, int priority, ZString message);
 
 fn void log(ZString fmt, ...) @extern("SDL_Log");
 
@@ -2398,10 +2398,10 @@ const int CUSTOM = 19;
 
 module sdl3;
 
-def MessageBoxColorType = uint;
+alias MessageBoxColorType = uint;
 
-distinct MessageBoxButtonFlags = uint;
-distinct MessageBoxFlags = uint;
+typedef MessageBoxButtonFlags = uint;
+typedef MessageBoxFlags = uint;
 
 struct MessageBoxButtonData
 {
@@ -2460,7 +2460,7 @@ const MessageBoxColorType MAX                =  5;
 
 module sdl3;
 
-distinct MetalView = void*;
+typedef MetalView = void*;
 
 fn MetalView metal_create_view(Window* window) @extern("SDL_Metal_CreateView");
 fn void metal_destroy_view(MetalView view) @extern("SDL_Metal_DestroyView");
@@ -2472,11 +2472,11 @@ fn int open_url(ZString url) @extern("SDL_OpenURL");
 
 module sdl3;
 
-distinct Cursor = void*;
-distinct MouseButtonFlags = uint;
-distinct MouseID = uint;
-distinct MouseWheelDirection = uint;
-distinct SystemCursor = uint;
+typedef Cursor = void*;
+typedef MouseButtonFlags = uint;
+typedef MouseID = uint;
+typedef MouseWheelDirection = uint;
+typedef SystemCursor = uint;
 
 fn int capture_mouse(bool enabled) @extern("SDL_CaptureMouse");
 fn Cursor* create_color_cursor(Surface* surface, int hot_x, int hot_y) @extern("SDL_CreateColorCursor");
@@ -2548,10 +2548,10 @@ module sdl3;
 
 const uint MUTEX_TIMEDOUT  =  1;
 
-distinct Condition = void*;
-distinct Mutex = void*;
-distinct RWLock = void*;
-distinct Semaphore = void*;
+typedef Condition = void*;
+typedef Mutex = void*;
+typedef RWLock = void*;
+typedef Semaphore = void*;
 
 fn int broadcast_condition(Condition* cond) @extern("SDL_BroadcastCondition");
 fn Condition* create_condition() @extern("SDL_CreateCondition");
@@ -2581,9 +2581,9 @@ fn int wait_semaphore_timeout(Semaphore* sem, int timeoutMS) @extern("SDL_WaitSe
 
 module sdl3;
 
-distinct PenAxis = uint;
-distinct PenID = uint;
-distinct PenInputFlags = uint;
+typedef PenAxis = uint;
+typedef PenID = uint;
+typedef PenInputFlags = uint;
 
 module sdl3::pen_axis;
 
@@ -2608,14 +2608,14 @@ const PenInputFlags ERASER_TIP = (1u << 30);
 
 module sdl3;
 
-distinct ChromaLocation = uint;
-distinct ColorPrimaries = uint;
-distinct ColorRange = uint;
-distinct Colorspace = uint;
-distinct ColorType = uint;
-distinct MatrixCoefficients = uint;
-distinct PixelFormat = uint;
-distinct TransferCharacteristics = uint;
+typedef ChromaLocation = uint;
+typedef ColorPrimaries = uint;
+typedef ColorRange = uint;
+typedef Colorspace = uint;
+typedef ColorType = uint;
+typedef MatrixCoefficients = uint;
+typedef PixelFormat = uint;
+typedef TransferCharacteristics = uint;
 
 struct Color
 {
@@ -2828,14 +2828,14 @@ fn ZString get_platform() @extern("SDL_GetPlatform");
 
 module sdl3;
 
-distinct PowerState = int;
+typedef PowerState = int;
 
 fn PowerState get_power_info(int* seconds, int* percent) @extern("SDL_GetPowerInfo");
 
 module sdl3;
 
-distinct PropertiesID = uint;
-distinct PropertyType = uint;
+typedef PropertiesID = uint;
+typedef PropertyType = uint;
 
 module sdl3::property_type;
 
@@ -2885,8 +2885,8 @@ fn bool point_in_rect_float(FPoint* p, FRect* r) @extern("SDL_PointInRectFloat")
 
 module sdl3;
 
-distinct Renderer = void*;
-distinct Texture  = void*;
+typedef Renderer = void*;
+typedef Texture  = void*;
 
 struct Vertex
 {
@@ -2984,8 +2984,8 @@ fn void destroy_texture(Texture* texture) @extern("SDL_DestroyTexture");
 fn int add_vulkan_render_semaphores(Renderer* renderer, uint wait_stage_mask, long wait_semaphore, long signal_semaphore) @extern("SDL_AddVulkanRenderSemaphores");
 fn int convert_event_to_render_coordinates(Renderer* renderer, Event* event) @extern("SDL_ConvertEventToRenderCoordinates");
 
-distinct RendererLogicalPresentation = uint;
-distinct TextureAccess = uint;
+typedef RendererLogicalPresentation = uint;
+typedef TextureAccess = uint;
 
 module sdl3::renderer_logical_presentation;
 
@@ -3003,7 +3003,7 @@ const TextureAccess TARGET     =  2;
 
 module sdl3;
 
-distinct Scancode = uint;
+typedef Scancode = uint;
 
 module sdl3::scancode;
 
@@ -3261,9 +3261,9 @@ module sdl3;
 
 const float STANDARD_GRAVITY = 9.80665f;
 
-distinct Sensor = void*;
-distinct SensorID = uint;
-distinct SensorType = int;
+typedef Sensor = void*;
+typedef SensorID = uint;
+typedef SensorType = int;
 
 fn void close_sensor(Sensor* sensor) @extern("SDL_CloseSensor");
 fn int get_sensor_data(Sensor* sensor, float* data, int num_values) @extern("SDL_GetSensorData");
@@ -3293,13 +3293,13 @@ const SensorType SDL_SENSOR_GYRO_R   =   6;
 
 module sdl3;
 
-distinct IConv_t = void*;
-def FunctionPointer  =  fn void();
+typedef IConv_t = void*;
+alias FunctionPointer  =  fn void();
 
-def MallocFunc   =  fn void*(usz size);
-def CallocFunc   =  fn void*(usz nmemb, usz size);
-def ReallocFunc  =  fn void*(void* mem, usz size);
-def FreeFunc     =  fn void(void* mem);
+alias MallocFunc   =  fn void*(usz size);
+alias CallocFunc   =  fn void*(usz nmemb, usz size);
+alias ReallocFunc  =  fn void*(void* mem, usz size);
+alias FreeFunc     =  fn void(void* mem);
 
 const float FLT_EPSILON = 1.1920928955078125e-07F;
 const int INVALID_UNICODE_CODEPOINT = 0xFFFD;
@@ -3405,19 +3405,19 @@ fn ZString iconv_string(ZString tocode, ZString fromcode, ZString inbuf, usz inb
 
 module sdl3;
 
-distinct Storage = void*;
+typedef Storage = void*;
 
-def SpaceRemainingCallback = fn ulong(void* userdata);
-def StorageCloseCallback = fn int(void* userdata);
-def StorageCopyCallback = fn int(void* userdata, ZString oldpath, ZString newpath);
-def StorageEnumerateCallback = fn int(void* userdata, ZString path, EnumerateDirectoryCallback callback, void* callback_userdata);
-def StorageInfoCallback = fn int(void* userdata, ZString path, PathInfo* info);
-def StorageMkdirCallback = fn int(void* userdata, ZString path);
-def StorageReadFileCallback = fn int(void* userdata, ZString path, void* destination, ulong length);
-def StorageReadyCallback = fn bool(void* userdata);
-def StorageRemoveCallback = fn int(void* userdata, ZString path);
-def StorageRenameCallback = fn int(void* userdata, ZString oldpath, ZString newpath);
-def StorageWriteFileCallback = fn int(void* userdata, ZString path, void* source, ulong length);
+alias SpaceRemainingCallback = fn ulong(void* userdata);
+alias StorageCloseCallback = fn int(void* userdata);
+alias StorageCopyCallback = fn int(void* userdata, ZString oldpath, ZString newpath);
+alias StorageEnumerateCallback = fn int(void* userdata, ZString path, EnumerateDirectoryCallback callback, void* callback_userdata);
+alias StorageInfoCallback = fn int(void* userdata, ZString path, PathInfo* info);
+alias StorageMkdirCallback = fn int(void* userdata, ZString path);
+alias StorageReadFileCallback = fn int(void* userdata, ZString path, void* destination, ulong length);
+alias StorageReadyCallback = fn bool(void* userdata);
+alias StorageRemoveCallback = fn int(void* userdata, ZString path);
+alias StorageRenameCallback = fn int(void* userdata, ZString oldpath, ZString newpath);
+alias StorageWriteFileCallback = fn int(void* userdata, ZString path, void* source, ulong length);
 
 struct StorageInterface
 {
@@ -3466,10 +3466,10 @@ fn int write_storage_file(Storage* storage, ZString path, void* source, ulong le
 
 module sdl3;
 
-distinct SurfaceFlags = uint;
-distinct SurfaceData = void*;
-distinct ScaleMode = uint;
-distinct FlipMode = uint;
+typedef SurfaceFlags = uint;
+typedef SurfaceData = void*;
+typedef ScaleMode = uint;
+typedef FlipMode = uint;
 
 struct Surface
 {
@@ -3574,18 +3574,18 @@ const FlipMode VERTICAL    =  2;
 
 module sdl3;
 
-distinct Win32Msg = void*;
-distinct WinRT_DeviceFamily = uint;
-distinct WinRT_Path = uint;
+typedef Win32Msg = void*;
+typedef WinRT_DeviceFamily = uint;
+typedef WinRT_Path = uint;
 
-distinct XTaskQueueHandle = void*;
-distinct XUserHandle = void*;
-distinct XEvent = void*;
+typedef XTaskQueueHandle = void*;
+typedef XUserHandle = void*;
+typedef XEvent = void*;
 
-def IOSAnimationCallback = fn void(void* userdata) @if(env::DARWIN);
-def WindowsMessageHook = fn bool(void* userdata, Win32Msg* msg) @if(env::WIN32);
-def RequestAndroidPermissionCallback = fn void(void* userdata, ZString permission, bool granted);
-def X11EventHook= fn bool(void* userdata, XEvent* xevent);
+alias IOSAnimationCallback @if(env::DARWIN) = fn void(void* userdata);
+alias WindowsMessageHook @if(env::WIN32) = fn bool(void* userdata, Win32Msg* msg);
+alias RequestAndroidPermissionCallback = fn void(void* userdata, ZString permission, bool granted);
+alias X11EventHook= fn bool(void* userdata, XEvent* xevent);
 
 const uint ANDROID_EXTERNAL_STORAGE_READ = 0x01;
 
@@ -3640,13 +3640,13 @@ const WinRT_Path TEMP_FOLDER         =  3;
 
 module sdl3;
 
-distinct Thread = void*;
-distinct ThreadID = ulong;
-distinct ThreadPriority = uint;
-distinct ThreadLocalStorageID = AtomicInt;
+typedef Thread = void*;
+typedef ThreadID = ulong;
+typedef ThreadPriority = uint;
+typedef ThreadLocalStorageID = AtomicInt;
 
-def ThreadFunction = fn int(void* data);
-def TLSDestructorCallback = fn void(void* value);
+alias ThreadFunction = fn int(void* data);
+alias TLSDestructorCallback = fn void(void* value);
 
 fn void cleanup_tls() @extern("SDL_CleanupTLS");
 fn Thread* create_thread(ThreadFunction func, ZString name, void* data) @extern("SDL_CreateThread");
@@ -3669,10 +3669,10 @@ const ThreadPriority TIME_CRITICAL  =  3;
 
 module sdl3;
 
-distinct Time = long;
+typedef Time = long;
 
-distinct DateFormat = int;
-distinct TimeFormat = int;
+typedef DateFormat = int;
+typedef TimeFormat = int;
 
 struct DateTime
 {
@@ -3710,10 +3710,10 @@ const TimeFormat HR_12 = 1;
 
 module sdl3;
 
-distinct TimerID = uint;
+typedef TimerID = uint;
 
-def NSTimerCallback = fn ulong(void* userdata, TimerID timerID, ulong interval);
-def TimerCallback = fn uint (void* userdata, TimerID timerID, uint interval);
+alias NSTimerCallback = fn ulong(void* userdata, TimerID timerID, ulong interval);
+alias TimerCallback = fn uint (void* userdata, TimerID timerID, uint interval);
 
 fn TimerID add_timer(uint interval, TimerCallback callback, void* userdata) @extern("SDL_AddTimer");
 fn TimerID add_timer_ns(ulong interval, NSTimerCallback callback, void* userdata) @extern("SDL_AddTimerNS");
@@ -3727,9 +3727,9 @@ fn int remove_timer(TimerID id) @extern("SDL_RemoveTimer");
 
 module sdl3;
 
-distinct FingerID = ulong;
-distinct TouchID = ulong;
-distinct TouchDeviceType = int;
+typedef FingerID = ulong;
+typedef TouchID = ulong;
+typedef TouchDeviceType = int;
 
 struct Finger
 {
@@ -3773,32 +3773,32 @@ macro int versionnum_micro(int version) => ((version) % 1000);
 
 module sdl3;
 
-distinct Window = void*;
-distinct WindowFlags = ulong;
-distinct WindowProperty = inline char*;
-distinct WindowID = uint;
+typedef Window = void*;
+typedef WindowFlags = ulong;
+typedef WindowProperty = inline char*;
+typedef WindowID = uint;
 
-distinct DisplayID = uint;
-distinct DisplayModeData = void*;
-distinct DisplayOrientation = int;
+typedef DisplayID = uint;
+typedef DisplayModeData = void*;
+typedef DisplayOrientation = int;
 
-distinct SystemTheme = int;
-distinct FlashOperation = int;
+typedef SystemTheme = int;
+typedef FlashOperation = int;
 
-distinct EGLDisplay = void*;
-distinct EGLConfig  = void*;
-distinct EGLSurface = void*;
-distinct EGLAttrib  = void*;
-distinct EGLint = int;
+typedef EGLDisplay = void*;
+typedef EGLConfig  = void*;
+typedef EGLSurface = void*;
+typedef EGLAttrib  = void*;
+typedef EGLint = int;
 
-def EGLAttribArrayCallback = fn EGLAttrib*();
-def EGLIntArrayCallback = fn EGLint*();
+alias EGLAttribArrayCallback = fn EGLAttrib*();
+alias EGLIntArrayCallback = fn EGLint*();
 
-distinct GLContext = void*;
-distinct GLattr = uint;
+typedef GLContext = void*;
+typedef GLattr = uint;
 
-distinct HitTestResult = uint;
-def HitTest = fn HitTestResult(Window* win, Point* area, void* data);
+typedef HitTestResult = uint;
+alias HitTest = fn HitTestResult(Window* win, Point* area, void* data);
 
 struct DisplayMode
 {
@@ -4099,10 +4099,10 @@ const HitTestResult RESIZE_LEFT         =  9;
 
 module sdl3;
 
-distinct VkAllocationCallbacks = void*;
-distinct VkInstance = void*;
-distinct VkPhysicalDevice = void*;
-distinct VkSurfaceKHR = void*;
+typedef VkAllocationCallbacks = void*;
+typedef VkInstance = void*;
+typedef VkPhysicalDevice = void*;
+typedef VkSurfaceKHR = void*;
 
 fn char** _vulkan_get_instance_extensions(uint* count) @extern("SDL_Vulkan_GetInstanceExtensions") @local;
 
